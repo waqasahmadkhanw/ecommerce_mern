@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const productSchmea=new Schema({
+const productSchema=new Schema({
     name:{
         type:String,
         required:true,
@@ -9,11 +9,6 @@ const productSchmea=new Schema({
     description:{
         type:String,
         required:true,
-    },
-    stock:{
-        type:Number,
-        required:true,
-       
     },
     image:{
         type:String,
@@ -36,4 +31,4 @@ const productSchmea=new Schema({
 },{timestamps:true})
 
 
-export const Product=mongoose.model("Product",productSchmea)
+export const Product=mongoose.model("Product",productSchema)
