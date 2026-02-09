@@ -16,12 +16,13 @@ import options from "../Options.js";
 
 // 
 const Loginuser=asnycHandler(async(req,res)=>{
-const {name,email,password}=req.body
-if(!(name||email||password)){
+const {username,email,password}=req.body ||{}
+console.log("name property we get",name,email,password)
+if(!username&&!email||!password){
 throw new ApiError(401,"All fields are required")
 }
 const user=await User.findOne({
-    $or:[{email},{password}]
+    $or:[{email},{username}]
 })
 if(!user){
     throw new ApiError(405,"You email or password is incorrect")
@@ -30,14 +31,14 @@ const isValidPassword=await user.isPasswordCorrect(password)
 if(!isValidPassword){
     throw new ApiError(403,"Invalid crenditials!!")
 }
-const login=await User.findOne(user._id).select("-password -refreshToken")
+const login=await User.findById(user._id).select("-password -refreshToken")
 
-const {accesstoken,refreshToken}=generateAccessandRefreshtokens(user._id)
+const {accessToken,refreshToken}=await generateAccessandRefreshtokens(user._id)
 return res.status(201)
-.cookie("accesstoken",accesstoken,options)
+.cookie("accessToken",accessToken,options)
 .cookie("refreshToken",refreshToken,options)
 .json(
-    new ApiResponse(200,login,accesstoken,refreshToken," User login Successfully")
+    new ApiResponse(200,{user:login,accessToken,refreshToken}," User login Successfully")
 )
 })
 export default Loginuser

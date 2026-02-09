@@ -11,13 +11,17 @@ import options from "../Options.js";
 //send proper response
 const logoutuser=asnycHandler(async(req,res)=>{
 const userid=req.user?._id
-await User.findByIdAndUpdate(userid,{
+console.log("LOGOUT USER:", req.user?._id);
+
+const updatedUser=await User.findByIdAndUpdate(userid,{
 $unset:{
     refreshToken:1
 }
 },
 {new:true}
 )
+
+console.log("UPDATED USER:", updatedUser);
 return res.status(201)
 .clearCookie("refreshToken",options)
 .clearCookie("accessToken",options)

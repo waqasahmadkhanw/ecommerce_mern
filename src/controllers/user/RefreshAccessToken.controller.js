@@ -17,20 +17,25 @@ import options from "../Options.js";
 //send response
 const refreshAccessToken=asnycHandler(async(req,res)=>{
 const incomingtoken=req.cookies.refreshToken||req.body.refreshToken
+console.log("tokens",incomingtoken)
 if(!incomingtoken){
     throw new ApiError(403,"Invalid refresh token")
 }
-const decodedToken=jwt.verify(incomingtoken,process.env.REFRESH_TOKEN_SECRET)
+    const decodedToken=jwt.verify(incomingtoken,process.env.REFRESH_TOKEN_SECRET)
+    console.log("decoedyokens",decodedToken)
+
 const user=await User.findById(decodedToken?._id)
+    console.log("decoedyokens user",user)
+
 if(!user){
     throw new ApiError(400,"User can not found")
 }
-if(user.refreshToken!==incomingtoken){
+if(incomingtoken!==user?.refreshToken){
     throw new ApiError(401,"refreshtoken is expired or used"); 
 }
-const {accesstoken,newrefreshToken}=await generateAccessandRefreshtokens(user?._id)
+const {accessToken,newrefreshToken}=await generateAccessandRefreshtokens(user?._id)
 return res.status(201)
-.cookie("accesstoken",accesstoken,options)
+.cookie("accessToken",accessToken,options)
 .cookie("refreshToken",newrefreshToken,options)
 .json(
     new ApiResponse(200,"User token refreshed successfully")

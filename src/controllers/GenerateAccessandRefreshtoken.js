@@ -12,11 +12,11 @@ try {
     if(!user){
         throw new ApiError(403,"This user can noyt registered")
     }
-    const accesstoken=user.generateAccessToken()
+    const accessToken=user.generateAccessToken()
     const refreshToken=user.generateRefreshToken()
     user.refreshToken=refreshToken
     await user.save({ validateBeforeSave: false })
-    return {accesstoken,refreshToken}
+    return {accessToken,refreshToken}
 } catch (error) {
     throw new ApiError(402,error,"Something went wrong while generating access and refresh tokens")
 }

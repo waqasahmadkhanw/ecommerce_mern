@@ -3,6 +3,7 @@
 //validation 
 //find user by logedin user id
 
+import { User } from "../../models/user.model.js";
 import ApiError from "../../utils/ApiError.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import asnycHandler from "../../utils/asyncHandler.js";

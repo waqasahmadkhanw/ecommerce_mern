@@ -6,6 +6,7 @@ import changePassword from "../controllers/user/ChangePassword.controller.js"
 import updateUserdetails from "../controllers/user/UpdateUserdetails.controller.js"
 import refreshAccessToken from "../controllers/user/RefreshAccessToken.controller.js"
 import AuthenticateUser from "../middlewares/auth.middleware.js"
+import getCurrentUser from "../controllers/user/Getcurrentuser.controller.js"
 const router=Router()
 
 router.route("/register").post(Register)
@@ -13,5 +14,6 @@ router.route("/login").post(Loginuser)
 router.route("/logout").delete(AuthenticateUser,logoutuser)
 router.route("/cahnge-password").put(AuthenticateUser,changePassword)
 router.route("/update-details").patch(AuthenticateUser,updateUserdetails)
-router.route("//refresh-token").post(refreshAccessToken)
+router.route("/refresh-token").post(refreshAccessToken)
+router.route("/getcurrentuser").get(AuthenticateUser,getCurrentUser)
 export default router

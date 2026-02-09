@@ -15,7 +15,7 @@ try {
     if(!token){
         throw new ApiError(401,"Invalid token")
     }
-    const verifiedToken=jwt.verify(token,ACCESS_TOKEN_SECRET)
+    const verifiedToken=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
     const user=await User.findById(verifiedToken?._id).select("-password -refreshToken")
     if(!user){
         throw new ApiError(400,"User can not found with this token")

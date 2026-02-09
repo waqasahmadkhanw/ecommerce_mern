@@ -15,18 +15,18 @@ import asnycHandler from "../../utils/asyncHandler.js";
 
  //return proper response
  const Register=asnycHandler(async(req,res)=>{
-const {name,email,password,role}=req.body
-if( [name,email,password,role].some((field)=>field?.trim()=="")){
+const {username,email,password,role}=req.body
+if( [username,email,password,role].some((field)=>field?.trim()=="")){
     throw new ApiError(403,"All fields are required!")
 }
 const existedUser=await User.findOne({
-    $or:[{email},{name}]
+    $or:[{email},{username}]
 })
 if (existedUser){
     throw new ApiError(402," User  with this email or password already existed,Please login")
 }
 const user=await User.create({
-  name,
+ username,
   email,
   password,
   role  
