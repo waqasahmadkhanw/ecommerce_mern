@@ -4,16 +4,15 @@ const productSchema=new Schema({
     name:{
         type:String,
         required:true,
-        unique:true
     },
     description:{
         type:String,
         required:true,
     },
-    image:{
-        type:String,
-        required:true
-    },
+    // image:{
+    //     type:String,
+    //     required:true
+    // },
     price:{
         type:Number,
         required:true
@@ -21,11 +20,12 @@ const productSchema=new Schema({
     category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Category",
+        required:true
     },
     stock:{
         type:Number,
         required:true,
-        min:1,
+        min:0,
         default:0
     },
 },{timestamps:true})

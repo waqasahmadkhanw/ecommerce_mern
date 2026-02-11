@@ -9,8 +9,8 @@ const categorySchema=new Schema({
         type:String,
         required:true
     },
-    image:{
-        type:String
-    }
+    // image:{
+    //     type:String
+    // }
 },{timestamps:true})
 export const Category=mongoose.model("Category",categorySchema)

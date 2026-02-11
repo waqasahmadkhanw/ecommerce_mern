@@ -16,8 +16,8 @@ import options from "../Options.js";
 
 // 
 const Loginuser=asnycHandler(async(req,res)=>{
-const {username,email,password}=req.body ||{}
-console.log("name property we get",name,email,password)
+const {username,email,password}=req.body||{}
+console.log("name property we get",username,email,password)
 if(!username&&!email||!password){
 throw new ApiError(401,"All fields are required")
 }
